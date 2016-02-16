@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	
+	<!-- Load properties file -->
+	<context:property-placeholder
+		location="/WEB-INF/conf/property/job.properties"
+		ignore-resource-not-found="false"
+		file-encoding="UTF-8"/>
+	
+	<!-- JOB Class -->
+	<bean name="batchJobService" class="com.mcnc.yuga.service.impl.BatchJobServiceImpl"/>
+	
+	<!-- JOB Detail run to calculate data every tuesday of week -->
+	<bean id="weeklyCalculationJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	    <property name="targetObject" ref="batchJobService"/>
+	    <property name="targetMethod" value="runWeeklyCalculation"/>
+	    <property name="concurrent" value="false"/>
+	</bean>		
+	
+	<!-- JOB Detail run to copy data of previous month to the new month every first of new month -->
+	<bean id="monthlyDataJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	    <property name="targetObject" ref="batchJobService"/>
+	    <property name="targetMethod" value="runMonthlyData"/>
+	    <property name="concurrent" value="false"/>
+	</bean>
+	
+	<!-- JOB Detail run to calculate data of previous month every 7 day in new month -->
+	<bean id="monthlyCalculationJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	    <property name="targetObject" ref="batchJobService"/>
+	    <property name="targetMethod" value="runMonthlyCalculation"/>
+	    <property name="concurrent" value="false"/>
+	</bean>	
+	
+	<!-- CRON trigger week calculation -->
+	<bean id="weeklyCalculationTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	    <property name="jobDetail" ref="weeklyCalculationJob"/>
+	    <property name="cronExpression" value="${CRON.weekly.calculation}"/>
+	</bean>
+	
+	<!-- CRON trigger monthly data -->
+	<bean id="monthlyDataTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	    <property name="jobDetail" ref="monthlyDataJob"/>
+	    <property name="cronExpression" value="${CRON.monthly.data}"/>
+	</bean>
+	
+	<!-- CRON trigger monthly calculation -->
+	<bean id="monthlyCalculationTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	    <property name="jobDetail" ref="monthlyCalculationJob"/>
+	    <property name="cronExpression" value="${CRON.monthly.calculation}"/>
+	</bean>			
+	
+	<!-- SchedulerFactory -->
+	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="monthlyDataTrigger"/>
+				<ref bean="weeklyCalculationTrigger" />
+				<ref bean="monthlyCalculationTrigger"/>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

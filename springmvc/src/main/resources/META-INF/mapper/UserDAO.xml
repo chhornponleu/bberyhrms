@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ponleu.springmvc.data.dao.UserDAO">
+	<resultMap type="UserDTO" id="mapUser" autoMapping="true"> 
+		<result column="userId" property="userId" />
+		<collection property="roleList" column="userId"
+		 	select="com.ponleu.springmvc.data.dao.RoleDAO.getRoleListByUserId"></collection>
+	</resultMap>
+	
+	<select id="getByUsername" resultMap="mapUser" parameterType="String">
+		SELECT userId, username, password, userActive
+		FROM users
+		WHERE username=#{username}
+	</select>
+</mapper>

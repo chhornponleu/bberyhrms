@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ponleu.springmvc.data.dao.RoleDAO">
+	<resultMap type="RoleDTO" id="mapRole" autoMapping="true">
+		<result column="roleId" property="roleId" />
+	</resultMap>
+	
+	<select id="getRoleList" resultMap="mapRole" parameterType="String">
+		SELECT *
+		FROM roles
+		WHERE roleActive=1;
+	</select>
+	
+	<select id="getRoleListByUserId" resultMap="mapRole" parameterType="int">
+		SELECT * from USER_ROLE ur 
+		INNER JOIN roles ro ON ur.roleId = ro.roleId
+		WHERE ur.userId = #{userId}
+	</select>
+	
+</mapper>
