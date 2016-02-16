@@ -1,2 +1,2 @@
-# bberyhrms
+# Blueberry HRMS
 OpenSource Java HRMS
