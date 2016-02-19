@@ -1,0 +1,20 @@
+1:  request to http://localhost:8080/security-jwt/auth/login
+ 
+	* header
+		Content-Type : application/json
+	
+	* body
+	{
+		username : "someone",
+		password : "this is free"
+	}
+	
+	this will reply a token xxx.xxx.xxx
+	
+2: request to  http://localhost:8080/security-jwt/
+	
+	* header
+		X-AUTH-TOKEN : xxx.xxx.xxx
+	
+	this will reply "someone"
+
