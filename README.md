@@ -1,2 +1,1 @@
-# Blueberry HRMS
-OpenSource Java HRMS
+# Sample project
