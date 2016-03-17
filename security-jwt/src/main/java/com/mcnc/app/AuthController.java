@@ -32,12 +32,7 @@ public class AuthController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(HttpServletRequest request,
 			HttpServletResponse response, @RequestBody Account account) {
-		
-//		UsernamePasswordAuthenticationToken upt  = new UsernamePasswordAuthenticationToken(account
-//				.getUsername(), account.getPassword());
-//		
-//		Authentication authentication = this.authenticationManager.authenticate(upt);
-//		SecurityContextHolder.getContext().setAuthentication(authentication);
+		//@TODO validate user information return jwt token.
 		String token = this.generateToken(account);
 		response.setHeader(TokenAuthenticationService.AUTH_HEADER_NAME, token);
 		return token;

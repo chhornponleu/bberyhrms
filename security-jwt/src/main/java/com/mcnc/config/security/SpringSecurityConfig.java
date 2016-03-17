@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,15 +36,22 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			.anonymous().and()
 			.servletApi().and()
 			.authorizeRequests()
+
+//			.antMatchers("/favicon.ico").permitAll()
+//			.antMatchers("/resources/**").permitAll()
+//			.antMatchers("/auth/**").permitAll()
 			
-			.antMatchers("/favicon.ico").permitAll()
-			.antMatchers("/resources/**").permitAll()
-			
-			.antMatchers("/auth/**").permitAll()
-			.anyRequest().authenticated().and()
+			.antMatchers("/protected").authenticated()
+			.antMatchers("/rest/**").authenticated()
+			.anyRequest().permitAll().and()
 			.addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
-		
 			
+	}
+	
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		super.configure(web);
+		web.ignoring().antMatchers("/protected"); //@TODO remove filter from /protected
 	}
 	
 	@Override
