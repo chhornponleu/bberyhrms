@@ -45,7 +45,7 @@ public class TestUserService extends TestBase{
 	}
 	
 	@Test
-	public void hello() throws JsonProcessingException {
+	public void list() throws JsonProcessingException {
 		Long start = System.currentTimeMillis();
 		System.out.println(new ObjectMapper().writeValueAsString(uSvr.list()));
 		System.out.println(System.currentTimeMillis() - start);

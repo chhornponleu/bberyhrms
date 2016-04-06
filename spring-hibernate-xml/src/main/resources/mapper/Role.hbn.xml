@@ -8,9 +8,9 @@
 			<generator class="identity" />
 		</id>
 		
-		<property name="roleName" column="role_name" update="true" ></property>
+		<property name="roleName" column="role_name" unique="true" update="true" ></property>
 		<property name="description" column="description"></property>
-		<property name="enabled" column="enabled" not-null="false" />
+		<property name="enabled" column="enabled" not-null="false" insert="false"/>
 		
 		<set name="users" 
 				table="users_roles" 
