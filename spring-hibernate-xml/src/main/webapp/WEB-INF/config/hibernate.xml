@@ -5,7 +5,8 @@
 	<session-factory>
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="show_sql">true</property>
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">create</property>
 		<mapping resource="mapper/User.hbn.xml"></mapping>
+		<mapping resource="mapper/Role.hbn.xml"/>
 	</session-factory>
 </hibernate-configuration>

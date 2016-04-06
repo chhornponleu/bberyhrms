@@ -1,22 +1,28 @@
 package com.spring.hbn.entity;
 
+import java.io.Serializable;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
-	
-	private Integer id;
+public class User implements Serializable {
+	private static final long serialVersionUID = 7438290583956056507L;
+
+	private Integer userId;
 	private String username;
 	private String password;
 	private String email;
 	private Boolean enabled;
+	
+	private Set<Role> roles;
 
-	public Integer getId() {
-		return id;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getUsername() {
@@ -44,7 +50,6 @@ public class User {
 	}
 
 	public Boolean getEnabled() {
-		enabled = enabled == null ? true : enabled;
 		return enabled;
 	}
 
@@ -52,4 +57,12 @@ public class User {
 		this.enabled = enabled;
 	}
 
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	
 }

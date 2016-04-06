@@ -1,7 +1,11 @@
 package com.spring.hbn.service;
 
-import com.spring.hbn.dao.UserDAO;
+import java.util.List;
 
-public interface UserService extends UserDAO {
+import com.spring.hbn.entity.User;
 
+public interface UserService {
+	List<User> list();
+	void save(User user);
+	void update(User user);
 }
