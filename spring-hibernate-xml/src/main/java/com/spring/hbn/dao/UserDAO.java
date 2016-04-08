@@ -1,10 +1,7 @@
 package com.spring.hbn.dao;
 
-import java.util.List;
-
 import com.spring.hbn.entity.User;
 
-public interface UserDAO {
-	public List<User> list();
-	public void insert(User user);
+public interface UserDAO extends BaseDAO<User> {
+	User getByUserId(Integer userId);
 }

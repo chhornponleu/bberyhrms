@@ -10,7 +10,9 @@
 		
 		<property name="roleName" column="role_name" unique="true" update="true" ></property>
 		<property name="description" column="description"></property>
-		<property name="enabled" column="enabled" not-null="false" insert="false"/>
+		<property name="enabled" insert="false">
+			<column name="enabled" default="true"></column>
+		</property>
 		
 		<set name="users" 
 				table="users_roles" 

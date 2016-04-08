@@ -1,6 +1,7 @@
 package com.spring.hbn.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,7 +16,7 @@ public class User implements Serializable {
 	private String email;
 	private Boolean enabled;
 	
-	private Set<Role> roles;
+	private Set<Role> roles = new HashSet<Role>();
 
 	public Integer getUserId() {
 		return userId;

@@ -15,7 +15,16 @@
 		http://www.springframework.org/schema/tx 
 		http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+            <!-- Use the HibernateAware mapper instead of the default -->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="com.spring.hbn.config.HibernateAwareObjectMapper" />
+                </property>
+            </bean>
+        </mvc:message-converters>
+	</mvc:annotation-driven>
 	<context:annotation-config />
 	<!-- <mvc:resources mapping="/resources/**" location="/assets/" /> -->
 

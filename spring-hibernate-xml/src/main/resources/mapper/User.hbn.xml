@@ -4,33 +4,33 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.spring.hbn.entity">
 	<class name="User" table="users">
+		<meta attribute="class-description">
+			This class contains user information
+		</meta>
+		<!-- <cache usage="read-only"/> -->
 		<id name="userId" column="user_id">
 			<generator class="identity" />
 		</id>
-		
+
 		<property name="username" column="username" />
 		<property name="password" column="password" />
 		<property name="email" column="email" />
 		<property name="enabled" column="enabled" not-null="false" />
-		
-		<set name="roles"
-				table="users_roles"
-				lazy="true" 
-				cascade="all" 
-				fetch="join"
-				inverse="false">
+
+		<set name="roles" table="users_roles" lazy="true" cascade="all"
+			fetch="join" inverse="false">
 			<key column="user_id" not-null="true"></key>
 			<many-to-many entity-name="com.spring.hbn.entity.Role">
 				<column name="role_id" not-null="true"></column>
 			</many-to-many>
-						
+
 		</set>
 	</class>
 
-	<sql-query name="sp_get_user_test">
+	<sql-query name="getByUserId">
 		<return class="com.spring.hbn.entity.User"></return>
 		<![CDATA[
-    		call get_user_test(:search)
+    		CALL sp_get_user_by_id(:userId)
     	]]>
 	</sql-query>
 
